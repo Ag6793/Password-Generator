@@ -1,26 +1,12 @@
-//click the button to generate a password, then a series of prompts: will ask
-//How many characters would you like your password to contain?
-//Click OK to include special characters/to include numbers?/to include lower case letters?/to include uppercase letters?
-//Based on the conditions it will generate a password
-//Also put a disclaimer: the password must contain at least 8 characters and no more than 128
-//At least 1 character type must be selected
-
-
-// Assignment Code
+// Generate password button
 var generateBtn = document.querySelector("#generate");
-
 
 // Write password to the #password input
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
-//Write your code here
-
-//Random index from an array of options  var index= Math.floor(Math.random()*options.length);  var options=["R","P","S"];
-//use Crypto.getRandomValues(typedArray)
- 
-function generatePassword(confirm){
+function generatePassword (confirm) {
 
 //An array of numbers
   const numbers = ["0","1","2","3","4","5","6","7","8","9"];
@@ -41,29 +27,61 @@ function generatePassword(confirm){
 //Remaining prompts 
   var prompts = ["special characters", "numbers", "lowercase letters", "uppercase letters"];
 
+  var passarray = [ ];
+
   //Conditional checks if user input is a num
     if (isNaN(numOfChars)){
       alert("It is not a number, try again");
-    } else if (numOfChars >= 8 && numOfChars <= 128) {
-      alert("It works!"); //Checks to make sure the conditional is working
 
-      //loop runs through each prompt to determine what characters wil be in the array
+    } else if (numOfChars >= 8 && numOfChars <= 128) {
+      //for loop for confirmation prompts. Will determine what will be included in the password
       for(var i=0; i< prompts.length; i++) {
               confirm[i] = window.confirm("Click OK to include " + prompts[i]);
       }
 
       if (confirm[0] === true) {
+        passarray = passarray.concat(...specialCharacters);
+        console.log("you added special characters");
+        console.log(passarray);
+      }; 
 
-      }
+      if (confirm[1] === true) {
+        passarray = passarray.concat(...numbers);
+        console.log("you added numbers");
+        console.log(passarray);
+      };
 
+      if (confirm[2] === true) {
+        passarray = passarray.concat(...lowerCase);
+        console.log("you added lowercase");
+        console.log(passarray);
+      };
+
+      if (confirm[3] === true) {
+        passarray = passarray.concat(...upperCase);
+        console.log("you added uppercase");
+        console.log(passarray);
+      };
+  
+      //if the user does not selet any characters for the password, they will get an alert to try again
+      if (!confirm[0] && !confirm[1] && !confirm[2] && !confirm[3] ) return window.alert("You did not select any characters, try again");//doesn't work yet
+  
     } else {
       alert("You password must contain at least 8 and no more than 128 characters. Try again.")
     }
     
+    //Generates Password from user input
+    let finalPassword = "";
+    for (let i = 0; i < numOfChars; i++) {
+      let rng =[Math.floor(Math.random() * passarray.length)];
+      finalPassword = finalPassword + passarray[rng];
+    }
+    return finalPassword;
+} 
+ passwordText.value = password;
 
-  passwordText.value = password;
+};
 
-}}
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
