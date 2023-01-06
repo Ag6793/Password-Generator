@@ -5,6 +5,8 @@
 ## Description
 This application will create a randomized password from the user input.
 
+Deployed at https://ag6793.github.io/Password-Generator/
+
 ![Screenshot-of-passwordgenerator](./Assets/passwordgenerator-screenshot.jpeg)
 
 ## Technologies
